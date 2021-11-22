@@ -57,6 +57,8 @@ const Icon = forwardRef(
       )
     }
 
+    if (name?.includes('Trinket.Amulet')) console.log('rendering with:', src)
+
     if (!src) {
       return null
     }
@@ -151,5 +153,5 @@ export default withAsyncProp(
           .replace(/[^\w\\/]/g, '')}.png`
       ).then(({ default: module }) => module),
     },
-  ['name'],
+  ['src', 'name'],
 )(Icon)
