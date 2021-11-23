@@ -57,7 +57,7 @@ const Icon = forwardRef(
       )
     }
 
-    if (name?.includes('Trinket.Amulet')) console.log('rendering with:', src)
+    if (name?.includes('Trinket.Amulet')) console.log('--- rendering with:', src)
 
     if (!src) {
       return null

@@ -1,6 +1,7 @@
 /* eslint-disable react/no-this-in-sfc */
 
 import React, { Component as ReactComponent, forwardRef } from 'react'
+import { equal } from 'fast-deep-equal/react'
 
 import { getDisplayName } from '.'
 
@@ -24,28 +25,30 @@ export default (transformProps, keys) => (Component) => {
       } else if (this.props.name?.includes('Trinket.Amulet')) console.log('no')
     }
 
+    shouldComponentUpdate = (nextProps, nextState) => {
+      if (!equal(nextState, this.state)) return true
+      if (!equal(nextProps, this.props)) return true
+
+      console.log('skipped hoc render')
+      return false
+    }
+
     resolveProps = async () => {
       if (this.props.name?.includes('Trinket.Amulet'))
         console.log('resolving...', this.props)
+
       const resolvedEntries = await Promise.all(
-        Object.entries(transformProps(this.props) || {})
-          // .filter(([, transform]) => !!transform)
-          // .map(async ([key, transform]) => {
-          //   try {
-          //     const value = await transform
-          //     return [key, value]
-          //   } catch (error) {
-          //     return [key, null]
-          //   }
-          // }),
-          .map(([key, transform]) =>
+        Object.entries(transformProps(this.props) || {}).map(
+          ([key, transform]) =>
             Promise.resolve(transform)
               .then((value) => [key, value])
               .catch(() => [key, null]),
-          ),
-      )
+        ),
+      ).filter(([, value]) => !!value)
+
       if (this.props.name?.includes('Trinket.Amulet'))
         console.log('...resolved', Object.fromEntries(resolvedEntries))
+
       this.setState({ propOverrides: Object.fromEntries(resolvedEntries) })
     }
 
