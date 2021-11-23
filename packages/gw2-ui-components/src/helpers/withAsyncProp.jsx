@@ -1,12 +1,15 @@
 /* eslint-disable react/no-this-in-sfc */
 
 import React, { Component as ReactComponent, forwardRef } from 'react'
+import { equal } from 'fast-deep-equal/react'
 
 import { getDisplayName } from '.'
 
 export default (transformProps, keys) => (Component) => {
+  const MemoizedComponent = React.memo(Component)
+
   class WithAsyncProp extends ReactComponent {
-    state = {}
+    state = { propOverrides: {} }
 
     componentDidMount = async () => this.resolveProps()
 
@@ -20,33 +23,31 @@ export default (transformProps, keys) => (Component) => {
     }
 
     shouldComponentUpdate = (nextProps, nextState) => {
-      if (nextState !== this.state) {
-        return true
-      }
-
-      const { [keys]: transformed, ...rest } = this.props
-      const { [keys]: nextTransformed, ...nextRest } = nextProps
-
-      return { ...rest } !== { ...nextRest }
+      return !equal(nextState, this.state) || !equal(nextProps, this.props)
     }
 
-    resolveProps = async () =>
-      Promise.all(
-        Object.entries(transformProps(this.props) || {})
-          .filter(([, transform]) => !!transform)
-          .map(async ([key, transform]) => {
-            try {
-              const value = await transform
-              this.setState({ [key]: value })
-            } catch (error) {
-              this.setState({ [key]: null })
-            }
-          }),
-      )
+    resolveProps = async () => {
+      const resolvedEntries = await Promise.all(
+        Object.entries(transformProps(this.props) || {}).map(
+          ([key, transform]) =>
+            Promise.resolve(transform)
+              .then((value) => [key, value])
+              .catch(() => [key, null]),
+        ),
+      ).filter(([, value]) => value)
+
+      this.setState({ propOverrides: Object.fromEntries(resolvedEntries) })
+    }
 
     render = () => {
       const { forwardedRef, ...rest } = this.props
-      return <Component ref={forwardedRef} {...rest} {...this.state} />
+      return (
+        <MemoizedComponent
+          ref={forwardedRef}
+          {...rest}
+          {...this.state.propOverrides}
+        />
+      )
     }
   }
 

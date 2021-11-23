@@ -151,5 +151,5 @@ export default withAsyncProp(
           .replace(/[^\w\\/]/g, '')}.png`
       ).then(({ default: module }) => module),
     },
-  ['name'],
+  ['src', 'name'],
 )(Icon)
