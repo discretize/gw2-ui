@@ -7695,6 +7695,27 @@ gud@^1.0.0:
   resolved "https://registry.yarnpkg.com/gud/-/gud-1.0.0.tgz#a489581b17e6a70beca9abe3ae57de7a499852c0"
   integrity sha512-zGEOVKFM5sVPPrYs7J5/hYEw2Pof8KCyOwyhG8sAF26mCAeUFAcYPu1mwB7hhpIP29zOIBaDqwuHdLp0jvZXjw==
 
+gw2-ui-bulk@^0.11.0:
+  version "0.11.12"
+  resolved "https://registry.yarnpkg.com/gw2-ui-bulk/-/gw2-ui-bulk-0.11.12.tgz#deb71c3b4ee20e46bd7f9ff6bb0b5cd2ffda18dc"
+  integrity sha512-efMzjYLjWaLz5llX2GpR5vct9h+LWcQMtjxpTG9ypGj9kzOohZVw9gZpbv/9RF5J09fbiqOBJINgY8K+UEwL4A==
+  dependencies:
+    gw2-ui-builder-bulk "^0.2.4"
+    gw2-ui-components-bulk "^0.12.10"
+    gw2-ui-redux-bulk "^0.5.13"
+
+gw2-ui-components-bulk@^0.12.10:
+  version "0.12.10"
+  resolved "https://registry.yarnpkg.com/gw2-ui-components-bulk/-/gw2-ui-components-bulk-0.12.10.tgz#34a29a35f4d5a089249d182e7fe5ef19a4d0b378"
+  integrity sha512-f20iRrDLVc5YMO7ZTCUX93BpNMDE7d4Sb/8n1cPbOhTPXbN1/i3mCwMJN8iSnySaqCWqwT2Qi7xW/qE7/H2kog==
+  dependencies:
+    "@tippyjs/react" "^4.2.5"
+    axios "^0.21.4"
+    classnames "^2.2.6"
+    lodash.camelcase "^4.3.0"
+    react-resize-aware "^3.0.1"
+    theme-ui "^0.3.5"
+
 gzip-size@5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/gzip-size/-/gzip-size-5.1.1.tgz#cb9bee692f87c0612b232840a873904e4c135274"
