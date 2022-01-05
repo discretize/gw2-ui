@@ -24,6 +24,9 @@
       "@commitlint/config-conventional"
     ]
   },
+  "resolutions": {
+    "@emotion/core": "^10.3.1"
+  },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
