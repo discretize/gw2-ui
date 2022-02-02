@@ -28,12 +28,6 @@ module.exports = {
       commonjs2: 'redux',
       amd: 'redux',
     },
-    reselect: {
-      root: 'Reselect',
-      commonjs: 'reselect',
-      commonjs2: 'reselect',
-      amd: 'reselect',
-    },
   },
   devtool: 'source-map',
 }
